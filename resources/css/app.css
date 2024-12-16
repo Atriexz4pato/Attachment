@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tab-btn.active-tab {
+    @apply border-blue-500 text-blue-600;
+}
+
+.tab-content {
+    @apply transition-all duration-300;
+} 
