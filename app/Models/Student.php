@@ -10,7 +10,6 @@ class Student extends Model
     protected $fillable = [
         'programme',
         'attachment_county',
-
         'address',
 
     ];
@@ -20,8 +19,9 @@ class Student extends Model
     }
 
     public function assessor(){
-        return $this->belongsToMany(Assessor::class);
-    }
+
+
+ }
 
     public function assessment(){
         return $this->hasMany(Assessment::class);
