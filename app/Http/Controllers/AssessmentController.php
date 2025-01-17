@@ -24,33 +24,42 @@ class AssessmentController extends Controller
         $data['student_id']=auth()->id();
         Assessment::create($data);
 
-        return response()->json([
-            'data'=>$data,
-            'message'=>'Assessment stored successfully',
-         ],201);
+        if ($request->ajax()) {
+            return response()->json([
+                'data'=>$data,
+                'message'=>'Assessment stored successfully',
+            ],201);
+        }
 
-
+        return view('assessment.assessment_view');
     }
 
 
-    public function assessment_view(){
+    public function assessment_view(Request $request){
+
         $assessments=Assessment::where('student_id',auth()->id())->get();
 
-        return response()->json([
-            'message' => 'Assessments retrieved successfully!',
-            'data' => $assessments,
-        ], 200); // 200 is the HTTP status code for success
+       if ($request->ajax()) {
+           return response()->json([
+               'message' => 'Assessments retrieved successfully!',
+               'data' => $assessments,
+           ], 200); // 200 is the HTTP status code for success
+       }
 
+       return view('assessment.assessment_view',compact('assessments'));
     }
 
 
-    public function assessment_edit($id){
+    public function assessment_edit($id, Request $request){
        $assessment = Assessment::where('id',$id)->first();
 
-       return response()->json([
-           'data' => $assessment,
-           'message'=>'Assessment retrieved successfully!',
-       ]);
+      if($request->ajax()){
+          return response()->json([
+              'data' => $assessment,
+              'message'=>'Assessment retrieved successfully!',
+          ]);
+      }
+      return view('assessment.assessment_edit',compact('assessment'));
     }
 
 
@@ -66,10 +75,13 @@ class AssessmentController extends Controller
             ], 404); // 404 for "Not Found"
         }
         $assessment->update($data);
-        return response()->json([
-            'message' => 'Assessment updated successfully!',
-            'data' => $assessment,
-        ]);
+        if ($request->ajax()){
+            return response()->json([
+                'message' => 'Assessment updated successfully!',
+                'data' => $assessment,
+            ]);
+        }
+        return view('assessment.assessment_view');
 
 
     }
