@@ -19,9 +19,9 @@ class Student extends Model
     }
 
     public function assessor(){
-
-
- }
+        return $this->belongsToMany(Assessor::class, 'assessor_student')
+            ->withTimestamps();
+    }
 
     public function assessment(){
         return $this->hasMany(Assessment::class);
