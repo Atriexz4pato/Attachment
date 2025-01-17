@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Assessor extends Model
 {
     //
+    //
     protected $fillable = [
 
     ];
@@ -16,7 +17,8 @@ class Assessor extends Model
     }
 
     public function student(){
-        return $this->belongsToMany(Student::class);
+        return $this->belongsToMany(Assessor::class, 'assessor_student')
+            ->withTimestamps();
     }
 
     public function assessment(){
